@@ -1,4 +1,4 @@
-﻿/*
+/*
  * jQuery Bootstrap News Box v1.0.1
  * 
  * Copyright 2014, Dragan Mitrovic
@@ -213,7 +213,7 @@ if (typeof Object.create !== 'function') {
 
             self.animationStarted = true;
 
-            var html = '<' + self.newsTagName + ' style="display:none;" class="' + self.newsClassName + '">' + $(self.$elem).find(self.newsTagName).last().html() + '</' + self.newsTagName + '>';
+            var html = $(self.$elem).find(self.newsTagName).last().clone(true);
             $(self.$elem).prepend(html);
             $(self.$elem).find(self.newsTagName).first().slideDown(self.options.animationSpeed, function(){
                 $(self.$elem).find(self.newsTagName).last().remove();
@@ -222,14 +222,6 @@ if (typeof Object.create !== 'function') {
             $(self.$elem).find(self.newsTagName +':nth-child(' + parseInt(self.options.newsPerPage + 1) + ')').slideUp(self.options.animationSpeed, function(){
                 self.animationStarted = false;
                 self.onReset(self.isHovered);
-            });
-
-            $(self.elem).find('.'+self.newsClassName).on('mouseenter', function(){
-                self.onReset(true);
-            });
-
-            $(self.elem).find('.'+self.newsClassName).on('mouseout', function(){
-                self.onReset(false);
             });
         },
 
@@ -242,24 +234,15 @@ if (typeof Object.create !== 'function') {
 
             self.animationStarted = true;
 
-            var html = '<' + self.newsTagName + ' style="display:none;" class=' + self.newsClassName + '>' + $(self.$elem).find(self.newsTagName).first().html() + '</' + self.newsTagName + '>';
-            $(self.$elem).append(html);
-
             $(self.$elem).find(self.newsTagName).first().slideUp(self.options.animationSpeed, function(){
+                var html = $(this).clone(true);
+                $(self.$elem).append(html);
                 $(this).remove();
             });
 
             $(self.$elem).find(self.newsTagName +':nth-child(' + parseInt(self.options.newsPerPage + 1) + ')').slideDown(self.options.animationSpeed, function(){
                 self.animationStarted = false;
                 self.onReset(self.isHovered);
-            });
-
-            $(self.elem).find('.'+self.newsClassName).on('mouseenter', function(){
-                self.onReset(true);
-            });
-
-            $(self.elem).find('.'+self.newsClassName).on('mouseout', function(){
-                self.onReset(false);
             });
         }
     };
